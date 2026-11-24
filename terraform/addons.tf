@@ -56,6 +56,11 @@ resource "helm_release" "argocd" {
     file("${path.module}/configs/argo-config.yaml")
   ]
 
+  depends_on = [
+    aws_eks_access_policy_association.github_actions_admin,
+    aws_eks_node_group.private_nodes
+  ]
+
 }
 
 resource "helm_release" "cert_manager" {

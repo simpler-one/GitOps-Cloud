@@ -18,12 +18,16 @@ jobs:
       - name: Getting Artifacts
         uses: actions/checkout@v4
       
-      - name: debug role
+      - name: debug role value
         run: |
-          echo ${{ secrets.AWS_ROLE_ARN }}
+          if [ -n "${MY_VAR}" ]; then
+            echo "MY_VAR is set (length: ${#MY_VAR})"
+          else
+            echo "MY_VAR is empty"
+          fi
 
       - name: Configrue AWS Credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }} 
           aws-region: ap-south-1

@@ -107,7 +107,7 @@ resource "aws_route_table" "private_1_rt"{
 
     route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "RNAT"
+        gateway_id = aws_nat_gateway.rnat.id
     }
 
     tags = {
@@ -134,7 +134,7 @@ resource "aws_route_table" "private_2_rt"{
 
     route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "RNAT"
+        gateway_id = aws_nat_gateway.rnat.id
     }
 
     tags = {

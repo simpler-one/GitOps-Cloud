@@ -22,8 +22,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::158694915030:role/GHAAccessToTerraformEKS
-          aws-region: ap-south-1
-          role-session-name: GitHubActionsTerraform   
+          aws-region: ap-south-1  
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4

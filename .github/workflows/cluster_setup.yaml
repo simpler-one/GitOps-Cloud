@@ -17,6 +17,10 @@ jobs:
     steps: 
       - name: Getting Artifacts
         uses: actions/checkout@v4
+      
+      - name: debug role
+        run: |
+          cat ${{ secrets.AWS_ROLE_ARN }}
 
       - name: Configrue AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4

@@ -13,6 +13,6 @@ variable "github_runner_token" {
 }
 
 variable "github_actions_role_arn" {
-  type = strin
+  type = string
   sensitive = true
 }

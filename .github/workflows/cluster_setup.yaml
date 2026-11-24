@@ -18,16 +18,16 @@ jobs:
       - name: Getting Artifacts
         uses: actions/checkout@v4
 
-      - name: Debug OIDC token claims
-        run: |
-          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
-          echo $TOKEN | cut -d. -f2 | base64 -d 2>/dev/null | jq '{sub, aud, iss, repository, ref}'
+      # - name: Debug OIDC token claims
+      #   run: |
+      #     TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+      #       "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
+      #     echo $TOKEN | cut -d. -f2 | base64 -d 2>/dev/null | jq '{sub, aud, iss, repository, ref}'
 
       - name: Configrue AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::158694915030:role/GHAAccessToTerraformEKS
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ap-south-1  
 
       - name: Setup Terraform

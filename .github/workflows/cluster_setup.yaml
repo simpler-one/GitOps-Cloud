@@ -20,7 +20,7 @@ jobs:
       
       - name: debug role
         run: |
-          cat ${{ secrets.AWS_ROLE_ARN }}
+          echo ${{ secrets.AWS_ROLE_ARN }}
 
       - name: Configrue AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4

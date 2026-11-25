@@ -297,10 +297,10 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
 
 }
 
-# resource "aws_iam_role_policy_attachment" "eks_container_registry_read_only" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-#   role       = aws_iam_role.eks_node_group_role.name
-# }
+resource "aws_iam_role_policy_attachment" "eks_container_registry_read_only" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eks_node_group_role.name
+}
 
 # EBS CSI Driver Policy for Node Group (Allows disk attachments for Postgres PV)
 # resource "aws_iam_role_policy_attachment" "eks_ebs_csi_policy" {
@@ -338,7 +338,7 @@ resource "aws_eks_node_group" "private_nodes" {
     aws_iam_role_policy_attachment.eks_worker_node_policy,
     aws_iam_role_policy_attachment.eks_cni_policy,
     aws_eks_addon.vpc_cni,
-    # aws_iam_role_policy_attachment.eks_container_registry_read_only,
+    aws_iam_role_policy_attachment.eks_container_registry_read_only,
     # aws_iam_role_policy_attachment.eks_ebs_csi_policy
   ]
 

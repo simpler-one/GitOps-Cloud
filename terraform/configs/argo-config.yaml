@@ -7,10 +7,17 @@ controller:
 server:
   ingress:
     annotations:
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      # Uncomment and set both below when you have an ACM certificate ARN and want HTTPS listener on 443:
+      # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+      # alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:158694915030:certificate/YOUR_CERT_ID"
+      # alb.ingress.kubernetes.io/ssl-redirect: "443"
     enabled: true
-    ingressClassName: nginx
-    tls: true
+    ingressClassName: alb
+    # tls: true
   replicas: 1
 
 repoServer:

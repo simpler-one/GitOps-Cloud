@@ -79,6 +79,7 @@ resource "helm_release" "cert_manager" {
   depends_on = [
     aws_eks_cluster.eks,
     aws_eks_node_group.private_nodes,
+    helm_release.aws_load_balancer_controller
   ]
 }
 
@@ -110,6 +111,7 @@ resource "helm_release" "actions_runner_controller" {
   depends_on = [
     aws_eks_cluster.eks,
     aws_eks_node_group.private_nodes,
+    helm_release.cert_manager
   ]
 }
 

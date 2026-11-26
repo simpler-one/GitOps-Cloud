@@ -38,6 +38,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   depends_on = [
     aws_eks_cluster.eks,
     aws_eks_node_group.private_nodes,
+    aws_eks_access_policy_association.github_actions_admin
   ]
 
 }
@@ -58,7 +59,7 @@ resource "helm_release" "argocd" {
 
   depends_on = [
     aws_eks_access_policy_association.github_actions_admin,
-    aws_eks_node_group.private_nodes
+    aws_eks_node_group.private_nodes,
   ]
 
 }
@@ -79,7 +80,8 @@ resource "helm_release" "cert_manager" {
   depends_on = [
     aws_eks_cluster.eks,
     aws_eks_node_group.private_nodes,
-    helm_release.aws_load_balancer_controller
+    helm_release.aws_load_balancer_controller,
+    aws_eks_access_policy_association.github_actions_admin
   ]
 }
 
@@ -111,7 +113,8 @@ resource "helm_release" "actions_runner_controller" {
   depends_on = [
     aws_eks_cluster.eks,
     aws_eks_node_group.private_nodes,
-    helm_release.cert_manager
+    helm_release.cert_manager,
+    aws_eks_access_policy_association.github_actions_admin
   ]
 }
 
@@ -123,5 +126,6 @@ resource "aws_eks_addon" "vpc_cni" {
 
   depends_on = [
     aws_eks_cluster.eks,
+    aws_eks_access_policy_association.github_actions_admin
   ]
 }

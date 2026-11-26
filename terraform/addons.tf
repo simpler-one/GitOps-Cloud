@@ -126,7 +126,6 @@ resource "aws_eks_addon" "vpc_cni" {
 
   depends_on = [
     aws_eks_cluster.eks,
-    aws_eks_node_group.private_nodes,
     aws_eks_access_policy_association.github_actions_admin
   ]
 }

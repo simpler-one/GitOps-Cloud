@@ -52,6 +52,8 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
+  timeout=600
+
   # Attach values from a local YAML file
   values = [
     file("${path.module}/configs/argo-config.yaml")

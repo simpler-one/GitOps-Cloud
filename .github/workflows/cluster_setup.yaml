@@ -9,7 +9,7 @@ on:
   #     master
 
 jobs:
-  cd_infra:
+  cluster-setup:
     runs-on: ubuntu-latest
     permissions:
       id-token: write 

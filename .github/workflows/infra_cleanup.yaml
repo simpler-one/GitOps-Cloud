@@ -1,11 +1,11 @@
-name: Dissemble Infrastructre
+name: Disassemble and Destroy Infrastructure
 
 on: 
   workflow_dispatch:
 
 
 jobs:
-  removing_components:
+  components-cleanup:
     runs-on: ubuntu-latest
     permissions:
       id-token: write

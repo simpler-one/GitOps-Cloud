@@ -1,0 +1,33 @@
+name: cicd
+
+on:
+  workflow_dispatch:
+    inputs:
+      secret_passphrase:
+        description: just for testing secret word
+        type: string
+        required: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: testing the secret
+        env: 
+          EXPECTED_SECRET: ${{ secrets.DEPLOY_PASSPHRASE }}
+          INPUT_SECRET: ${{ github.event.inputs.secret_passphrase}}
+        run: |
+          echo "::add-mask::$INPUT_SECRET"
+
+          if [ -z "$EXPECTED_SECRET" ]; then
+            echo "Error: Expected secret is not configured."
+            exit 1
+          fi
+
+          if [ "$INPUT_SECRET" != "$EXPECTED_SECRET" ]; then
+            echo "Validation failed: Invalid passphrase."
+            exit 1
+          fi
+
+          echo "Validation succeeded!"
+

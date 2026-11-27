@@ -3,6 +3,11 @@ name: setting up k8s cluster
 
 on:
   workflow_dispatch:
+    inputs:
+      secret_passphrase:
+        description: secret word to create cluster
+        type: string
+        required: true
 
   # push:
   #   branches:
@@ -15,6 +20,25 @@ jobs:
       id-token: write 
       contents: read
     steps: 
+      - name: validating the secret word
+        env:
+          INPUT_SECRET: ${{github.event.inputs.secret_passphrase}}
+          EXPECTED_SECRET: ${{secrets.DEPLOY_PASSPHRASE}}
+        run: |
+          echo "::add-mask::$INPUT_SECRET"
+
+          if [ -z "$EXPECTED_SECRET" ]; then
+            echo "Error: Expected secret is not configured."
+            exit 1
+          fi
+
+          if [ "$INPUT_SECRET" != "$EXPECTED_SECRET" ]; then
+            echo "Validation failed: Invalid passphrase."
+            exit 1
+          fi
+
+          echo "Validation succeeded!"
+
       - name: Getting Artifacts
         uses: actions/checkout@v4
 

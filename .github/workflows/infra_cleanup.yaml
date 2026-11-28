@@ -2,39 +2,15 @@ name: Disassemble and Destroy Infrastructure
 
 on: 
   workflow_dispatch:
-    inputs:
-      secret_passphrase:
-        description: secret word to delete infrastructure
-        type: string 
-        required: true
-
 
 jobs:
   components-cleanup:
     runs-on: ubuntu-latest
+    environment: infrastructure
     permissions:
       id-token: write
       contents: read
     steps: 
-
-      - name: validating the secret word
-        env: 
-          INPUT_SECRET:
-          EXPECTED_SECRET: ${{secrets.COMPONENTS_DELETE_PASSPHRASE}}
-        run: |
-          echo "::add-mask::$INPUT_SECRET"
-
-          if [ -z "$EXPECTED_SECRET" ]; then
-            echo "Error: Expected secret is not configured."
-            exit 1
-          fi
-
-          if [ "$INPUT_SECRET" != "$EXPECTED_SECRET" ]; then
-            echo "Validation failed: Invalid passphrase."
-            exit 1
-          fi
-
-          echo "Validation succeeded!"
 
       - name: Checkout Code
         uses: actions/checkout@v4
